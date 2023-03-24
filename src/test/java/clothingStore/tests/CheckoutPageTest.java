@@ -17,7 +17,7 @@ import clothingStore.testComponents.BaseTest;
 
 public class CheckoutPageTest extends BaseTest{
 	
-	/*@Test(dataProvider="getData")
+	@Test(dataProvider="getData")
 	public void fillIn(HashMap<String,String> input ){
 		HomePage  homePage=new HomePage(driver);
 		ProductPage productPage=homePage.getFeaturedProduct();
@@ -26,7 +26,7 @@ public class CheckoutPageTest extends BaseTest{
 		checkoutPage.fillIn(input.get("firstName"),input.get("lastName"),input.get("companyName"),input.get("address"),input.get("apartmentNumber"),input.get("cityName"),input.get("zip"),input.get("phoneNumber"),input.get("email"),input.get("notes"));
 		checkoutPage.SelectDistrcit("Central Banat");
 		//checkoutPage.selectCountry("Serbia"); 
-	} */
+	} 
 	@Test(description="If product was successfully added to cart, after clicking on Buy now option,confirmation message should appear")
 	public void validateMessage() {
 		HomePage  homePage=new HomePage(driver);
@@ -35,7 +35,7 @@ public class CheckoutPageTest extends BaseTest{
 		productPage.addToCart();
 		CheckoutPage checkoutPage =productPage.goToCheckout();
 		String observedMsg=checkoutPage.getMessage();
-		Assert.assertEquals("View Basket" + productName +"has been added to your basket.",observedMsg);
+		Assert.assertEquals("View Basket" +  productName +"has been added to your basket.",observedMsg);
 		
 	}
 	

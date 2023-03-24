@@ -51,6 +51,7 @@ public class ProductPageTest extends BaseTest {
     
     @Test(description="The user should be able to select the desired attribute of the product such as color,size and to add more than one product to cart")
     public void validateProductOptions() {
+    	
     	HomePage homePage= new HomePage(driver);
     	ProductPage productPage= homePage.searchProductByName(itemName2);
     	productPage.selectColor();

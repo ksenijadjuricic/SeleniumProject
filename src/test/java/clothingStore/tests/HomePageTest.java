@@ -5,13 +5,15 @@ import java.util.List;
 
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.DataProvider;
+
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import clothingStore.pageObject.HomePage;
 import clothingStore.pageObject.SearchedProductsPage;
 import clothingStore.testComponents.BaseTest;
 
+@Listeners(clothingStore.testComponents.CustomeListeners.class)
 public class HomePageTest extends BaseTest{
 	HomePage homePage;
 	int expectedNumberOfProducts=8;
@@ -20,7 +22,7 @@ public class HomePageTest extends BaseTest{
 	String searchTerm="purple";
 	String pageTitleEng= "Home - Etualshop.com";
 	String pageTitleSrb= "Početna - Etualshop.com";
-	String newEmail="ymakis@hotmail.com";
+	String newEmail="ymakis@hotmail.com"; 
 	
 	 @Test(description="Number of Featured Products displayed should be the same as the number customer required")
 	public void validateTheNumberOfDisplayedFeaturedProducts() {
@@ -114,7 +116,7 @@ public class HomePageTest extends BaseTest{
 		homePage=new HomePage(driver);
 		homePage.selectEnglishLanguage();
 		String title=homePage.getTitle();
-		Assert.assertEquals(pageTitleEng, homePage.getTitle());
+		Assert.assertEquals(pageTitleEng, title);
 	
 		//select SRB and check if title is in Serbian Language
 		homePage.selectSerbianLanguage();

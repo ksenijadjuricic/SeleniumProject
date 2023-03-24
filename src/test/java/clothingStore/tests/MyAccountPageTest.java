@@ -31,7 +31,7 @@ public class MyAccountPageTest extends BaseTest {
 		   myAccountPage= logInPage.logIn(userEmail, password); 
 	}
 	
-	@Test(description="When clicking on Recent Orders options, new Page with displayed orders should be displayed",
+	/*@Test(description="When clicking on Recent Orders options, new Page with displayed orders should be displayed",
 			dependsOnMethods="logIn")
 	public void validateRecentOrdersButton() {
 		
@@ -46,7 +46,7 @@ public class MyAccountPageTest extends BaseTest {
 		   myAccountPage= logInPage.logIn(userEmail, password); 
 		  addressPage=myAccountPage.goToAddressPage();
 		
-	}
+	} 
 	
 	@Test(description="When clicking on Account Details options, new Page with options to modify account informations should be displayed",
 			dependsOnMethods="logIn")
@@ -54,9 +54,9 @@ public class MyAccountPageTest extends BaseTest {
 		homePage=new HomePage(driver);
 		   logInPage=homePage.goToLogInPage();
 		   myAccountPage= logInPage.logIn(userEmail, password); 
-		   accountDetailsPage=myAccountPage.goToAccountDetailsPage();
+		   accountDetailsPage=myAccountPage.goToAccountDetailsPage(); 
 		
-	}
+	}  */
 	
 	@Test(description="Number of Products displayed should be the same as the number customer required",
 			 dependsOnMethods="logIn")

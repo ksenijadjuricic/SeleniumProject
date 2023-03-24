@@ -12,33 +12,38 @@ import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import clothingStore.pageObject.HomePage;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 
 public class BaseTest {
 	
 	public WebDriver driver;
+public Properties prop;
 
 	public WebDriver initializeDriver() throws IOException {
-		 Properties prop = new Properties();
+		  prop = new Properties();
 			FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"\\src\\main\\java\\clothingStore\\resources\\GlobalData.properties");
         prop.load(fis);
         String browserName=	System.getProperty("browser")!=null ? System.getProperty("browser") :prop.getProperty("browser");
         
         if(browserName.contains("chrome")) {
         	ChromeOptions options=new ChromeOptions();
+        	options.addArguments("--remote-allow-origins=*");
         	WebDriverManager.chromedriver().setup();
         	
         	if(browserName.contains("headless")){
@@ -65,18 +70,31 @@ public class BaseTest {
 	}
 	
 	
-		public List<HashMap<String, String>> getJsonDataToMap(String filePath) throws IOException
-		{
-			//read json to string
-		String jsonContent = 	FileUtils.readFileToString(new File(filePath), 
-				StandardCharsets.UTF_8);
-		
-		//String to HashMap- Jackson Datbind
-		
-		ObjectMapper mapper = new ObjectMapper();
-		  List<HashMap<String, String>> data = mapper.readValue(jsonContent, new TypeReference<List<HashMap<String, String>>>() {
-	      });
-		  return data; }
+	public List<HashMap<String, String>> getJsonDataToMap(String filePath) throws IOException
+	{
+		//read json to string
+	String jsonContent = 	FileUtils.readFileToString(new File(filePath), 
+			StandardCharsets.UTF_8);
+	
+	//String to HashMap- Jackson Databind
+	
+	ObjectMapper mapper = new ObjectMapper();
+	  List<HashMap<String, String>> data = mapper.readValue(jsonContent, new TypeReference<List<HashMap<String, String>>>() {
+      });
+	  return data;
+	
+	//{map, map}
+
+	}
+	
+	public String getScreenshot(String testCaseName,WebDriver driver) throws IOException
+	{
+		TakesScreenshot ts = (TakesScreenshot)driver;
+		File source = ts.getScreenshotAs(OutputType.FILE);
+		File file = new File(System.getProperty("user.dir") + "//reports//" + testCaseName + ".png");
+		FileUtils.copyFile(source, file);
+		return System.getProperty("user.dir") + "//reports//" + testCaseName + ".png";			
+	}
 		  
 		  
 	public void scrollBy(String parameters) {
@@ -85,7 +103,7 @@ public class BaseTest {
 	}
 	
 	
-	@BeforeMethod(alwaysRun=true)
+	@BeforeTest(alwaysRun=true)
 	public void launchApplication() throws IOException {
 		driver=initializeDriver();
       
@@ -97,8 +115,9 @@ public class BaseTest {
 		driver.navigate().back();
 	}
 
-	/* @AfterMethod(alwaysRun=true)
+
+	 @AfterTest(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
-	} */
+	} 
 }
